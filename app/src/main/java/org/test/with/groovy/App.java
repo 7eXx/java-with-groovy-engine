@@ -4,20 +4,15 @@
 
 package org.test.with.groovy;
 
-import groovy.util.Eval;
-
 import javax.script.*;
 
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
 
     public static void main(String[] args) {
         ScriptEngineManager factory = new ScriptEngineManager();
         ScriptEngine engine = factory.getEngineByName("groovy");
 
-        String fact = "vr.r(1,3287) == 12345 || vr.r(1,3287) == 3469";
+        String fact = "vr.r(1,3287)==12345 || vr.r(1,3287)==3469";
         PmClient pmClient = new PmClient();
         VariableReader vr = new VariableReader(pmClient, 182);
 
@@ -28,7 +23,8 @@ public class App {
 
         try {
             Object result = engine.eval(fact);
-            System.out.println(result);
+            assert result instanceof Boolean;
+            assert (Boolean) result;
         } catch (ScriptException e) {
             throw new RuntimeException(e);
         }
